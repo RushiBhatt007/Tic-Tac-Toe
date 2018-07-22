@@ -1,14 +1,15 @@
 package com.droidrank.tictactoe;
 
+import android.support.v7.app.*;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity
+public class frontScreenActivity extends AppCompatActivity
 {
     Button single,multi;
+    String Single="single",Multi="multi";
 
     protected void onCreate(final Bundle savedInstanceState)
     {
@@ -22,11 +23,20 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent nextscreen = new Intent(getApplicationContext() ,play_zone.class);
+                Intent nextscreen = new Intent(getApplicationContext() ,playZoneActivity.class);
+                nextscreen.putExtra("modeID",Multi);
+                startActivity(nextscreen);
+            }
+        });
+
+        single.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent nextscreen = new Intent(getApplicationContext() ,playZoneActivity.class);
+                nextscreen.putExtra("modeID",Single);
                 startActivity(nextscreen);
             }
         });
     }
-
-
 }
