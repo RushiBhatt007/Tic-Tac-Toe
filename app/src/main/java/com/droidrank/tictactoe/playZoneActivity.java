@@ -1,7 +1,7 @@
 package com.droidrank.tictactoe;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,13 +10,16 @@ import android.widget.TextView;
 
 public class playZoneActivity extends AppCompatActivity
 {
-    Button block1, block2, block3, block4, block5, block6, block7, block8, block9, restart;
+    Button block1, block2, block3, block4, block5, block6, block7, block8, block9, restart, stats;
     TextView result;
     Spinner level_select;
-    int chance = 0;
+    int chance = 0, winX = 0, winO = 0, draw = 0;
+    Boolean anyResult = false;
     String p1="O",p2="X";
     String choice[][] = new String[3][3];
     String mode;
+
+    private int progressStatus=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,7 @@ public class playZoneActivity extends AppCompatActivity
         block9 = (Button) findViewById(R.id.bt_block9);
         result = (TextView) findViewById(R.id.tv_show_result);
         restart = (Button) findViewById(R.id.bt_restart_game);
+        stats = (Button) findViewById(R.id.see_graphs);
 
         //setting up default value
         for(int i=0;i<3;i++)
@@ -54,6 +58,7 @@ public class playZoneActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 chance=0;
+                anyResult=false;
                 result.setText("");
                 block1.setText("");
                 block2.setText("");
@@ -68,6 +73,18 @@ public class playZoneActivity extends AppCompatActivity
                 for(int i=0;i<3;i++)
                     for(int j=0;j<3;j++)
                         choice[i][j]="";
+            }
+        });
+
+        stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent nextScreen = new Intent(getApplicationContext() ,statsActivity.class);
+                nextScreen.putExtra("XwinID",winX+"");
+                nextScreen.putExtra("OwinID",winO+"");
+                nextScreen.putExtra("drawID",draw+"");
+                startActivity(nextScreen);
             }
         });
 
@@ -134,22 +151,36 @@ public class playZoneActivity extends AppCompatActivity
     {
         int response = checkWin();
         if (response == 1)
+        {
             result.setText("O wins");
+            winO++;
+            anyResult=true;
+        }
         else if (response == 2)
+        {
             result.setText("X wins");
+            winX++;
+            anyResult=true;
+        }
         else if (response == 3)
+        {
             result.setText("It's a draw");
+            draw++;
+            anyResult=true;
+        }
     }
 
     public void pressed(View view)
     {
-        if(result.getText().equals("")) {
-            if (mode.equals("multi")) {
-                int temp = 2131230740;
-                final Button b = (Button) findViewById(view.getId());
-                int id = b.getId() - temp;
-                int i = id / 3;
-                int j = id % 3;
+        final Button b = (Button) findViewById(view.getId());
+        int temp = 2131230740;
+        int id = b.getId() - temp;
+        int i = id / 3;
+        int j = id % 3;
+        if(result.getText().equals("") && b.getText().equals(""))
+        {
+            if (mode.equals("multi") && anyResult==false)
+            {
                 if (chance % 2 == 0 && b.getText().equals("")) {
                     b.setText(p1);
                     choice[i][j] = p1;
@@ -159,37 +190,27 @@ public class playZoneActivity extends AppCompatActivity
                     choice[i][j] = p2;
                     chance++;
                 }
-                int response = checkWin();
-                if (response == 1)
-                    result.setText("O wins");
-                else if (response == 2)
-                    result.setText("X wins");
-                else if (response == 3)
-                    result.setText("It's a draw");
-            } else if (mode.equals("single")) {
-                int temp = 2131230740;
-                final Button b = (Button) findViewById(view.getId());
-                int id = b.getId() - temp;
-                int i = id / 3;
-                int j = id % 3;
-                if (chance % 2 == 0 && b.getText().equals("")) {
+                moveMade();
+            }
+            else if (mode.equals("single") && anyResult==false)
+            {
+                if (chance % 2 == 0 && b.getText().equals(""))
+                {
                     b.setText(p1);
                     choice[i][j] = p1;
                     chance++;
+                    moveMade();
                 }
 
-                moveMade();
-
-                if (chance <= 8)
+                if (chance <= 8 && anyResult==false)
                 {
-                    SystemClock.sleep(200);
                     int[] arr = computerPlay();
                     final Button computer = (Button) findViewById(temp + arr[0] * 3 + arr[1]);
                     computer.setText(p2);
                     choice[arr[0]][arr[1]] = p2;
                     chance++;
+                    moveMade();
                 }
-                moveMade();
             }
         }
     }

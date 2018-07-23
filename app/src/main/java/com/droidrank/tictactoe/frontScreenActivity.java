@@ -23,9 +23,9 @@ public class frontScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent nextscreen = new Intent(getApplicationContext() ,playZoneActivity.class);
-                nextscreen.putExtra("modeID",Multi);
-                startActivity(nextscreen);
+                Intent nextScreen = new Intent(getApplicationContext() ,playZoneActivity.class);
+                nextScreen.putExtra("modeID",Multi);
+                startActivity(nextScreen);
             }
         });
 
@@ -33,9 +33,9 @@ public class frontScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent nextscreen = new Intent(getApplicationContext() ,playZoneActivity.class);
-                nextscreen.putExtra("modeID",Single);
-                startActivity(nextscreen);
+                Intent nextScreen = new Intent(getApplicationContext() ,playZoneActivity.class);
+                nextScreen.putExtra("modeID",Single);
+                startActivity(nextScreen);
             }
         });
     }

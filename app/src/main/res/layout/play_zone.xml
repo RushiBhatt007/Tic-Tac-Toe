@@ -161,7 +161,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
-        android:text="@string/restart_button_text_initially"
+        android:text="@string/restart_button_text_in_middle_of_game"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/see_graphs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="Statistics"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

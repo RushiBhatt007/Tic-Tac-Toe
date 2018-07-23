@@ -16,8 +16,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".playZoneActivity">
-        </activity>
+        <activity android:name=".playZoneActivity"></activity>
+
+        <activity android:name="statsActivity"></activity>
     </application>
 
 </manifest>
