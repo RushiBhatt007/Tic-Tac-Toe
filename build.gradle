@@ -19,6 +19,12 @@ allprojects {
     }
 }
 
+//for graph facility ...for more info refer https://github.com/PhilJay/MPAndroidChart
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

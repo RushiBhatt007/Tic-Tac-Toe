@@ -30,4 +30,6 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
+    //dependency for graph facility
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
