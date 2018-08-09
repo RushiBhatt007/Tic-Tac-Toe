@@ -96,6 +96,7 @@ public class playZoneActivity extends AppCompatActivity
     }
     public int[] checkWin()
     {
+        boolean hasWon = false;
         int[] resultArray = new int[3];
         resultArray[0] = 4; //default value for continue play
 
@@ -116,64 +117,69 @@ public class playZoneActivity extends AppCompatActivity
         //value of row or column
         //-1 for diagonal, draw, continue play
 
-        //check rows
-        for(int i=0;i<3;i++)
+        if(!hasWon)
         {
-            if(choice[i][0].equals(choice[i][1]) && choice[i][1].equals(choice[i][2]) && !choice[i][0].equals(""))
-                if (choice[i][0].equals(p1))
-                {
-                    int tempArray[] = {1, 1, i};
+            //check rows
+            for (int i = 0; i < 3; i++) {
+                if (choice[i][0].equals(choice[i][1]) && choice[i][1].equals(choice[i][2]) && !choice[i][0].equals(""))
+                    if (choice[i][0].equals(p1)) {
+                        int tempArray[] = {1, 1, i};
+                        resultArray = tempArray;
+                        hasWon = true;
+                    } else {
+                        int tempArray[] = {2, 1, i};
+                        resultArray = tempArray;
+                        hasWon = true;
+                    }
+            }
+        }
+
+        if(!hasWon) {
+            //check columns
+            for (int i = 0; i < 3; i++) {
+                if (choice[0][i].equals(choice[1][i]) && choice[1][i].equals(choice[2][i]) && !choice[0][i].equals(""))
+                    if (choice[0][i].equals(p1)) {
+                        int tempArray[] = {1, 2, i};
+                        resultArray = tempArray;
+                        hasWon = true;
+                    } else {
+                        int tempArray[] = {2, 2, i};
+                        resultArray = tempArray;
+                        hasWon = true;
+                    }
+            }
+        }
+
+        if(!hasWon) {
+            //check left diagonal
+            if (choice[0][0].equals(choice[1][1]) && choice[1][1].equals(choice[2][2]) && !choice[0][0].equals(""))
+                if (choice[0][0].equals(p1)) {
+                    int tempArray[] = {1, 3, -1};
                     resultArray = tempArray;
-                }
-                else
-                {
-                    int tempArray[] = {2, 1, i};
+                    hasWon = true;
+                } else {
+                    int tempArray[] = {2, 3, -1};
                     resultArray = tempArray;
+                    hasWon = true;
                 }
         }
 
-        //check columns
-        for(int i=0;i<3;i++)
-        {
-            if(choice[0][i].equals(choice[1][i]) && choice[1][i].equals(choice[2][i]) && !choice[0][i].equals(""))
-                if (choice[0][i].equals(p1))
-                {
-                    int tempArray[] = {1, 2, i};
+        if(!hasWon) {
+            //check right diagonal
+            if (choice[0][2].equals(choice[1][1]) && choice[1][1].equals(choice[2][0]) && !choice[0][2].equals(""))
+                if (choice[0][2].equals(p1)) {
+                    int tempArray[] = {1, 4, -1};
                     resultArray = tempArray;
-                }
-                else
-                {
-                    int tempArray[] = {2, 2, i};
+                    hasWon = true;
+                } else {
+                    int tempArray[] = {2, 4, -1};
                     resultArray = tempArray;
+                    hasWon = true;
                 }
         }
 
-        //check left diagonal
-        if(choice[0][0].equals(choice[1][1]) && choice[1][1].equals(choice[2][2]) && !choice[0][0].equals(""))
-            if (choice[0][0].equals(p1))
-            {
-                int tempArray[] = {1, 3, -1};
-                resultArray = tempArray;
-            }
-            else
-            {
-                int tempArray[] = {2, 3, -1};
-                resultArray = tempArray;
-            }
-
-        //check right diagonal
-        if(choice[0][2].equals(choice[1][1]) && choice[1][1].equals(choice[2][0]) && !choice[0][2].equals(""))
-            if (choice[0][2].equals(p1))
-            {
-                int tempArray[] = {1, 4, -1};
-                resultArray = tempArray;
-            }
-            else
-            {
-                int tempArray[] = {2, 4, -1};
-                resultArray = tempArray;
-            }
-        if(chance>=9)
+        // draw
+        if(chance>=9 && !hasWon)
         {
             int tempArray[] = {3, -1, -1};
             resultArray = tempArray;
@@ -203,7 +209,7 @@ public class playZoneActivity extends AppCompatActivity
         {
             int rowVal = response[2];
             for(int i=0;i<3;i++)
-                buttons[(int)Math.pow(3,rowVal)+i].setTextColor(getResources().getColor(R.color.myred));
+                buttons[3*rowVal + i].setTextColor(getResources().getColor(R.color.myred));
         }
 
         //column
