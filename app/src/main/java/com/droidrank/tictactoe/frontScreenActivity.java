@@ -15,28 +15,17 @@ public class frontScreenActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.front_screen);
+    }
 
-        single = (Button)findViewById(R.id.single_player);
-        multi = (Button)findViewById(R.id.multi_player);
+    public void onChosen(View view)
+    {
+        final Button button = (Button) findViewById(view.getId());
+        Intent nextScreen = new Intent(getApplicationContext() ,playZoneActivity.class);
+        if(button.getId() == R.id.single_player)
+            nextScreen.putExtra("modeID",Single);
 
-        multi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent nextScreen = new Intent(getApplicationContext() ,playZoneActivity.class);
-                nextScreen.putExtra("modeID",Multi);
-                startActivity(nextScreen);
-            }
-        });
-
-        single.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent nextScreen = new Intent(getApplicationContext() ,playZoneActivity.class);
-                nextScreen.putExtra("modeID",Single);
-                startActivity(nextScreen);
-            }
-        });
+        else if(button.getId() == R.id.multi_player)
+            nextScreen.putExtra("modeID",Multi);
+        startActivity(nextScreen);
     }
 }

@@ -3,19 +3,18 @@ package com.droidrank.tictactoe;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class statsActivity extends AppCompatActivity
 {
-    LineChart lineChart;
+    PieChart pieChart;
     int winX,winO,draw;
     int colors[]= {R.color.myred, R.color.myblue, R.color.myyellow };
     @Override
@@ -32,38 +31,32 @@ public class statsActivity extends AppCompatActivity
         winO = Integer.parseInt(tempO);
         draw = Integer.parseInt(tempDraw);
 
-        lineChart = (LineChart) findViewById(R.id.graph);
+        float perX = ((float) winX/(winX+winO+draw))*100;
+        float perO = ((float)winO/(winX+winO+draw))*100;
+        float perDraw = ((float)draw/(winX+winO+draw))*100;
 
-        List<Entry> entries = new ArrayList<Entry>();
-        entries.add(new Entry(0f,winX));
-        entries.add(new Entry(1f,winO));
-        entries.add(new Entry(2f,draw));
+        pieChart = (PieChart) findViewById(R.id.graph);
 
-        LineDataSet lineDataSet = new LineDataSet(entries,"Statistical representation of result");
-        lineDataSet.setColors(colors, getApplicationContext());
-        lineDataSet.setCubicIntensity(100);
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        lineDataSet.setDrawFilled(true);
+        ArrayList<PieEntry> yVal =  new ArrayList<>();
+        yVal.add(new PieEntry(perX,"Win of X"));
+        yVal.add(new PieEntry(perO,"Win of Y"));
+        yVal.add(new PieEntry(perDraw,"Draw"));
 
-        LineData lineData = new LineData(lineDataSet);
+        PieDataSet pieDataSet = new PieDataSet(yVal, "Tic-Tac-Toe Game Results");
 
-        XAxis xAxis = new XAxis();
-        YAxis yAxis = new YAxis();
-        xAxis.setEnabled(false);
-        yAxis.setEnabled(false);
-        xAxis.setDrawAxisLine(false);
-        yAxis.setDrawAxisLine(false);
-        xAxis.setDrawGridLines(false);
-        yAxis.setDrawGridLines(false);
+        PieData pieData = new PieData(pieDataSet);
 
-        lineChart.getXAxis().setEnabled(false);
-        lineChart.getAxisRight().setDrawGridLines(false);
-        lineChart.getAxisLeft().setDrawAxisLine(false);
-        lineChart.getXAxis().setDrawGridLines(false);
-        lineChart.getXAxis().setDrawAxisLine(false);
+        // In Percentage
+        pieData.setValueFormatter(new PercentFormatter());
+        // Default value
+        //data.setValueFormatter(new DefaultValueFormatter(0));
+        pieChart.setData(pieData);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setTransparentCircleRadius(58f);
 
-        lineChart.setData(lineData);
-        lineChart.animateXY(2000,2000);
-        lineChart.invalidate(); // refresh
+        pieChart.setHoleRadius(58f);
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        pieChart.invalidate();
     }
 }

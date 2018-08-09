@@ -117,21 +117,18 @@ public class playZoneActivity extends AppCompatActivity
         //value of row or column
         //-1 for diagonal, draw, continue play
 
-        if(!hasWon)
-        {
-            //check rows
-            for (int i = 0; i < 3; i++) {
-                if (choice[i][0].equals(choice[i][1]) && choice[i][1].equals(choice[i][2]) && !choice[i][0].equals(""))
-                    if (choice[i][0].equals(p1)) {
-                        int tempArray[] = {1, 1, i};
-                        resultArray = tempArray;
-                        hasWon = true;
-                    } else {
-                        int tempArray[] = {2, 1, i};
-                        resultArray = tempArray;
-                        hasWon = true;
-                    }
-            }
+        //check rows
+        for (int i = 0; i < 3; i++) {
+            if (choice[i][0].equals(choice[i][1]) && choice[i][1].equals(choice[i][2]) && !choice[i][0].equals(""))
+                if (choice[i][0].equals(p1)) {
+                    int tempArray[] = {1, 1, i};
+                    resultArray = tempArray;
+                    hasWon = true;
+                } else {
+                    int tempArray[] = {2, 1, i};
+                    resultArray = tempArray;
+                    hasWon = true;
+                }
         }
 
         if(!hasWon) {
@@ -286,7 +283,7 @@ public class playZoneActivity extends AppCompatActivity
         int j = id % 3;
         if(result.getText().equals("") && b.getText().equals(""))
         {
-            if (mode.equals("multi") && anyResult==false)
+            if (mode.equals("multi") && !anyResult)
             {
                 if (chance % 2 == 0 && b.getText().equals(""))
                 {
@@ -306,7 +303,7 @@ public class playZoneActivity extends AppCompatActivity
                 }
                 moveMade();
             }
-            else if (mode.equals("single") && anyResult==false)
+            else if (mode.equals("single") && !anyResult)
             {
                 if (chance % 2 == 0 && b.getText().equals(""))
                 {
@@ -318,7 +315,7 @@ public class playZoneActivity extends AppCompatActivity
                     moveMade();
                 }
 
-                if (chance <= 8 && anyResult==false)
+                if (chance <= 8 && !anyResult)
                 {
                     int[] arr = computerPlay();
                     final Button computer = (Button) findViewById(temp + arr[0] * 3 + arr[1]);

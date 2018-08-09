@@ -27,6 +27,7 @@
         android:id="@+id/single_player"
         android:layout_weight="0.01"
         android:textAllCaps="false"
+        android:onClick="onChosen"
         android:text="Single Player" />
 
     <Button
@@ -39,6 +40,7 @@
         android:id="@+id/multi_player"
         android:layout_weight="0.01"
         android:textAllCaps="false"
+        android:onClick="onChosen"
         android:text="Multiplayer"/>
 
 </LinearLayout>
